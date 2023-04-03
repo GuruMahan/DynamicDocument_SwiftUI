@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
    @ObservedObject var viewModel = DocumentViewModel()
   @State var isSelected = false
     var body: some View {
@@ -15,56 +16,38 @@ struct ContentView: View {
             ZStack {
                 LinearGradient(colors: [Color.gray.opacity(0.2)], startPoint: .leading, endPoint: .trailing)
                 VStack {
-                    
                     headerView
                         .frame(maxWidth: .infinity)
                         .background(Color.white)
-                    
                     ScrollView{
-
                         frontView
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color.white)
                             .padding([.top,.bottom],3)
                             .padding(.horizontal,7)
                     }
-                  //Spacer()
-                    
                      bottomView
                         .frame(width: UIScreen.main.bounds.width)
                         .background(Color.white)
-                    
                 }
-                
-                
             }
         }
         .fileImporter(isPresented: $isSelected, allowedContentTypes: [.image,.audio,.data]) { result in
-            
             do {
-
                 let furl = try result.get()
                 print("")
                 viewModel.documentModel[viewModel.selectedIndex].url = furl.lastPathComponent
                 viewModel.documentModel[viewModel.selectedIndex].pathExtension = furl.pathExtension
                 print("file Ext \(furl.pathExtension)")
-         
-
-
             } catch {
                 print("error: \(error)") // todo
             }
-
         }
-        
     }
     
     @ViewBuilder var headerView: some View {
-        
         HStack {
-            
             Button {
-                
             } label: {
                 HStack{
                     Image(systemName: "chevron.backward")
@@ -72,31 +55,19 @@ struct ContentView: View {
                     Text("Back")
                         .foregroundColor(.blue)
                         .font(.headline)
-                    
                 }
-                
             }.padding(.leading,10)
             Spacer()
-            
-            
                 .overlay( Text("Document")
                     .padding(.horizontal,-99) , alignment: .center )
                 .font(Font.system(size: 30))
-            
         }
         .padding(10)
-        
     }
    
-    
-
-
     @ViewBuilder var bottomView: some View {
-        
         HStack(spacing: 30){
-            
             Button {
-                
             } label: {
                 Text("Back")
                     .frame(maxWidth: .infinity )
@@ -105,13 +76,8 @@ struct ContentView: View {
                     .overlay( /// apply a rounded border
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(.blue, lineWidth: 2))
-                
-                
             }
-            
-            //  .padding(.horizontal,30)
             Button {
-                
             } label: {
                 Text("Submit")
                     .frame(height: 40)
@@ -121,7 +87,6 @@ struct ContentView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(.gray, lineWidth: 2))
             }
-            //  .padding(.horizontal,30)
         }
         .padding()
     }
@@ -140,21 +105,16 @@ struct ContentView: View {
                     listView(list: doc, index: index)
                 }
             }
-
         }
-        
         .padding(10)
     }
     
     @ViewBuilder func emptyListView(list: DocumentModel?,index: Int) -> some View{
-        
         Text(list?.title ?? "")
             .font(.headline)
         VStack{
         HStack{
-            
             Text(list?.subtile ?? "")
-            // .font(Font.subheadline)
                 .font(Font.system(size: 12))
                 .fontWeight(.light)
             Spacer()
@@ -172,7 +132,6 @@ struct ContentView: View {
                 Image(systemName: "arrow.up.to.line")
                     .font(Font.system(size: 25))
             }
-            
         } .padding()
             .fontWeight(.light)
             .overlay(
@@ -181,16 +140,13 @@ struct ContentView: View {
                     .foregroundColor(.gray.opacity(0.3)) )
     }
         Divider()
-
     }
+    
     @ViewBuilder func listView(list: DocumentModel,index: Int) -> some View{
         Text(list.title )
             .font(.headline)
         HStack{
-            
-            
             Text(list.subtile)
-            // .font(Font.subheadline)
                 .font(Font.system(size: 12))
                 .fontWeight(.light)
             Spacer()
@@ -200,26 +156,16 @@ struct ContentView: View {
         }
         HStack(spacing: 15){
             Button {
-           
             } label: {
                 Text(list.pathExtension).font(Font.system(size: 20))
                     .fontWeight(.bold)
                     .foregroundColor(.red)
-                
             } .frame(width: 50)
                 .frame(maxHeight: .infinity)
                 .background(Color.gray.opacity(0.3))
-            
-            //  .padding(.vertical, 12)
-            
             VStack(alignment:.leading,spacing: 3){
-                
                 Text(list.url)
                     .padding(.vertical,8)
-                //                                Text("File name123ABC.pdf")
-                //                                    .fontWeight(.light)
-                //                                    .font(Font.system(size: 14))
-                //                                    .padding(.vertical,1)
             }
             Spacer()
             Button {
@@ -230,15 +176,10 @@ struct ContentView: View {
                     .font(Font.system(size: 20))
             }
             .padding()
-            
         }.frame(maxWidth: .infinity)
             .background(Color.gray.opacity(0.09))
             .cornerRadius(5)
-        
-
-        
     }
-    
 }
             
  
